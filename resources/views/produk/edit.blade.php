@@ -1,11 +1,12 @@
 @extends('template.header')
 @section('title',"From Edit Produk")
 @section('content')
-    <div class="w-2/4 mx-auto text-center mt-8 mb-2"></div>
-        <h2 class="text-2xl font-bold mb-6">Edit Data Produk</h2>
-    </div>
-
-    <form action="{{ route('produk.update', $produk->id) }}" method="POST" enctype="multipart/form-data">
+<div class="border-spacing-8 w-2/4 mx-auto text-center mt-8 mb-2"></div>
+    <h2 class="text-center text-2xl font-bold mb-6">Edit Data Produk</h2>
+</div>
+<div class="flex container mx-auto px-5 py-5 bg-white border-blue-400 rounded-lg shadow-2xl mt-8">
+    
+    <form class="w-full" action="{{ route('produk.update', $produk->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-4">
@@ -32,4 +33,5 @@
             <button type="submit" class="mb-5 bg-slate-500 text-white px-4 py-2 rounded hover:bg-blue-600">Simpan Produk</button>
         </div>
     </form>
+</div>
 @endsection
