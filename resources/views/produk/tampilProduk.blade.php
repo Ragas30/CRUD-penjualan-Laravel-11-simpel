@@ -37,7 +37,7 @@
                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"></th>
               </tr>
             </thead>
-            @foreach ($produks as $i)
+            @foreach ($produks as $index =>  $i)
                 
            
             <tbody class="divide-y text-black dark:divide-neutral-700 ">
@@ -48,7 +48,7 @@
                     <label for="hs-table-search-checkbox-1" class="sr-only">Checkbox</label>
                   </div>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">1</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">{{$index + 1}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">{{ $i->nama_produk }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-black ">{{ $i->deskripsi }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 ">{{ $i->harga }}</td>
