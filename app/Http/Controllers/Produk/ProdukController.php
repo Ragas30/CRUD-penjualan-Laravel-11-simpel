@@ -29,25 +29,32 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi data
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'harga' => 'required|numeric',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $path = null;
+        // Proses unggah foto jika ada
+        $fotoPath = null;
         if ($request->hasFile('foto')) {
-            $path = $request->file('foto')->store('images', 'public');
+            $file = $request->file('foto');
+            $fotoPath = 'asset/produk/' . uniqid() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('asset/produk'), $fotoPath);
         }
 
+        // Simpan data produk
         Produk::create([
             'nama_produk' => $request->nama_produk,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
-            'foto' => $path,
+            'foto' => $fotoPath,
         ]);
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan.');
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('produk.create')->with('success', 'Produk berhasil ditambahkan.');
     }
 
 
@@ -72,48 +79,63 @@ class ProdukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_produk' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
             'harga' => 'required|numeric',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $produk = produk::findOrFail($id);
+        // Cari produk berdasarkan ID
+        $produk = Produk::findOrFail($id);
 
-        $path = $produk->foto; // Keep the old path by default
+        // Proses unggah foto jika ada
         if ($request->hasFile('foto')) {
-
-            if ($path) {
-                \Storage::disk('public')->delete($path);
+            // Hapus foto lama jika ada
+            if ($produk->foto && file_exists(public_path($produk->foto))) {
+                unlink(public_path($produk->foto));
             }
-            $path = $request->file('foto')->store('images', 'public');
+
+            // Simpan foto baru
+            $file = $request->file('foto');
+            $fotoPath = 'asset/produk/' . uniqid() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('asset/produk'), $fotoPath);
+
+            // Update kolom foto
+            $produk->foto = $fotoPath;
         }
 
+        // Update data produk
         $produk->update([
-            'nama' => $request->nama,
+            'nama_produk' => $request->nama_produk,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
-            'foto' => $path,
         ]);
 
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui.');
+        // Redirect dengan pesan sukses
+        return redirect()->route('produk.edit', $produk->id)->with('success', 'Produk berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $produk = produk::findOrFail($id);
+        // Cari produk berdasarkan ID
+        $produk = Produk::findOrFail($id);
 
-        // Delete the photo if it exists
-        if ($produk->foto) {
-            \Storage::disk('public')->delete($produk->foto);
+        // Hapus foto dari direktori jika ada
+        if ($produk->foto && file_exists(public_path($produk->foto))) {
+            unlink(public_path($produk->foto));
         }
 
+        // Hapus data produk dari database
         $produk->delete();
-        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus.');
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('produk.create')->with('success', 'Produk berhasil dihapus.');
     }
 }

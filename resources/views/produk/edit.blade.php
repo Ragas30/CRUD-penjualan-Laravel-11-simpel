@@ -27,6 +27,7 @@
         <div class="mb-6">
             <label for="foto" class="block text-left font-medium text-gray-700">Foto Produk</label>
             <input type="file" name="foto" id="foto" class="w-full p-2 border border-gray-300 rounded mt-1" accept="image/*">
+            <img src="{{ asset('storage/' . $produk->foto) }}" class="w-32 h-32 object-cover" alt="">
         </div>
 
         <div class="text-center">
