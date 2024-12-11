@@ -2,11 +2,9 @@
 
 use App\Http\Controllers\dashboard\HomeController;
 use App\Http\Controllers\Produk\ProdukController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
-route::get('/', [HomeController::class, 'index'])->name('home');
+route::get('/', [HomeController::class, 'index'])->name('home')->middleware('guest');
 
-route::resource('produk', ProdukController::class);
-route::get('/tampilData', [ProdukController::class, 'index'])->name(name: 'tampilData');
-Route::get('produk/{id}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
-// route::post('updateData', [ProdukController::class, 'update'])->name(name: 'updateData');
+route::resource('produk', ProdukController::class)->middleware(AuthMiddleware::class);

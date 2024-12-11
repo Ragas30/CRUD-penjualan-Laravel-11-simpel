@@ -52,7 +52,7 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">{{ $i->nama_produk }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-black ">{{ $i->deskripsi }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 ">{{ $i->harga }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800  flex justify-center"><img src="{{ asset('storage/'.$i->foto) }}" alt="" class="w-1/2"></td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800  flex justify-center"><img src="{{ asset($i->foto) }}" alt="" class="w-1/2"></td>
                 <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                   <a href="{{ route('produk.edit', $i->id) }}" type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Edit</a>
                 </td>
