@@ -11,10 +11,11 @@
     <section class="flex justify-center items-center h-screen">
         <div class="flex flex-col border-0 bg-gray-200 rounded-sm shadow-xl h-[30%] w-1/4">
             <h1 class="text-2xl font-bold">Login Page</h1>
-            <form action="" enctype="multipart/form-data" method="POST">
+            <form action="{{ route('login') }}" enctype="multipart/form-data" method="POST">
+                @csrf
                 <div class="mt-4 px-10">
-                    <label for="">Username</label>
-                    <input class="w-full" type="text" name="username" id="username">
+                    <label for="">email</label>
+                    <input class="w-full" type="email" name="email" id="username">
                 </div>
                 <div class="mt-4 px-10">
                     <label for="password">Password</label>
@@ -24,7 +25,7 @@
                     <button class="bg-white w-1/4 rounded-lg hover:bg-blue-500 font-bold" type="submit">Login</button>
                 </div>
                 <div class="flex flex-col justify-center text-center mt-4">
-                    <a href="{{ route('register.create') }}" class=" hover:text-blue-800">Belum Punya Account?</a>
+                    <a href="{{ route('register') }}" class=" hover:text-blue-800">Belum Punya Account?</a>
                     <a href="{{ route('home') }}" class=" hover:text-blue-800">Kembali Ke Home</a>
                 </div>
             </form>

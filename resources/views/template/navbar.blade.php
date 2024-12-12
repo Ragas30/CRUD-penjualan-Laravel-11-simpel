@@ -70,12 +70,13 @@
               </div>
             </div>
           </div>
-  
+          @if (Auth::check())
           <div>
             <a class="group inline-flex items-center gap-x-2 py-2 px-3 bg-[#ff0] font-medium text-sm text-neutral-800 rounded-full focus:outline-none" href="{{ route('login') }}">
               Login
             </a>
           </div>
+          @endif
         </div>
       </div>
       <!-- End Collapse -->

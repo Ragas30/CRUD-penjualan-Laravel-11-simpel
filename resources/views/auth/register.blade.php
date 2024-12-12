@@ -11,14 +11,15 @@
     <section class="flex justify-center items-center h-screen">
         <div class="flex flex-col border-0 bg-gray-200 rounded-sm shadow-xl h-[40%] w-1/4 p-5">
             <h1 class="text-2xl font-bold">Register Page</h1>
-            <form action="{{ route('register.store') }}" enctype="multipart/form-data" method="POST">
+            <form action="{{ route('register') }}" enctype="multipart/form-data" method="POST">
+                @csrf
                 <div class="mt-4 px-10">
                     <label for="email">E-mail</label>
                     <input class="w-full" type="email" name="email" id="email">
                 </div>
                 <div class="mt-4 px-10">
                     <label for="">Username</label>
-                    <input class="w-full" type="text" name="username" id="username">
+                    <input class="w-full" type="text" name="name" id="username">
                 </div>
                 <div class="mt-4 px-10">
                     <label for="password">Password</label>
